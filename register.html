@@ -1,0 +1,72 @@
+
+
+
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Registration Page</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f0f0f0;
+    }
+   .container {
+      width: 80%;
+      margin: 40px auto;
+      padding: 20px;
+      border: 1px solid #ccc;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+    button {
+      background-color: #4CAF50;
+      color: white;
+      padding: 10px 15px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+  </style>
+  <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+</head>
+<body>
+  <div class="container">
+    <h1>Registration</h1>
+    <p>Please fill in the details below to create an account.</p>
+    <form id="auth-form">
+        
+    
+      <label for="username">Username:</label> 
+      
+      
+      <input type="text" id="username" name="username" > <i class='bx bxs-user'></i><br><br> 
+      
+      
+
+      <label for="password">Password:</label>
+      <input type="password" id="password" name="password"> <i class='bx bxs-lock-alt' ></i><br><br>
+      <button type="submit">Register</button>
+      
+      <p>Already have an account? <a href="authorization.html">Login</a></p>
+      <p id="success-message"></p>
+
+    </form>
+    <p id="error-message"></p>
+  </div>
+
+
+  <script>
+    const form = document.getElementById('auth-form');
+    const successMessage = document.getElementById('success-message');
+
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+      successMessage.textContent = 'Registration successful! You can now login.';
+    });
+  </script>
+  
+
+ 
+</body>
+</html>
