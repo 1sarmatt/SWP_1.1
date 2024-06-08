@@ -1,7 +1,8 @@
+
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Welcome Page</title>
+  <title>Authorization Page</title>
   <style>
     body {
       font-family: Arial, sans-serif;
@@ -15,14 +16,77 @@
       border-radius: 10px;
       box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     }
+    button {
+      background-color: #4CAF50;
+      color: white;
+      padding: 10px 15px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
   </style>
+  <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
 </head>
 <body>
   <div class="container">
-    <h1>Welcome to Our Quiz!</h1>
-    <p>We're excited to have you take our quiz. Please click the button below to get started.</p>
-    <button onclick="window.location.href='authorization.html'">Get Started</button>
-    
+    <h1>Authorization</h1>
+    <p>Please enter your username and password to access the quiz.</p>
+    <form id="auth-form">
+      <label for="username">Username:</label> 
+      
+      <input type="text" id="username" name="username" > <i class='bx bxs-user'></i><br><br> 
+      
+      <label for="password">Password:</label>
+      <input type="password" id="password" name="password"> <i class='bx bxs-lock-alt' ></i><br><br>
+      <button type="submit">Login</button>
+      
+    <p> Don't have an account? <a
+    href = "register.html">  Register</a></p>
+
+    </form>
+    <p id="error-message"></p>
   </div>
+
+  
+
+  <script>
+    const form = document.getElementById('auth-form');
+    const errorMessage = document.getElementById('error-message');
+
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const username = document.getElementById('username').value;
+      const password = document.getElementById('password').value;
+
+      
+      if (username === 'admin' && password === 'password') {
+        localStorage.setItem('authorized', true);
+        window.location.href = 'quiz.html';
+      } else {
+        errorMessage.textContent = 'Invalid username or password';
+      }
+    });
+  </script>
+
+  <!-- <script>
+    const form = document.getElementById('auth-form');
+    const errorMessage = document.getElementById('error-message');
+
+    form.addEventListener('submit', (e) => {
+        e.preventDefault();
+        const username = document.getElementById('username').value;
+        const password = document.getElementById('password').value;
+        const users = JSON.parse(localStorage.getItem('users')) || {};
+
+        if (users[username] && users[username] === password) {
+            localStorage.setItem('authorized', true);
+            window.location.href = 'quiz.html'; // Redirect to the quiz page
+        } else {
+            errorMessage.textContent = 'Invalid username or password';
+        }
+    });
+  </script> -->
+
+  
 </body>
 </html>
