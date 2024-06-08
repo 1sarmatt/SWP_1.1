@@ -1,0 +1,46 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Quiz Page</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f0f0f0;
+    }
+   .container {
+      width: 80%;
+      margin: 40px auto;
+      padding: 20px;
+      border: 1px solid #ccc;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Quiz Time!</h1>
+    <p>Here's your first question:</p>
+    <h2>What is the SWP primary instructor's name?</h2>
+    <ul>
+      <li><input type="radio" name="answer" value="Victor"> Victor</li>
+      <li><input type="radio" name="answer" value="Andrew"> Andrew</li>
+      <li><input type="radio" name="answer" value="Nursultan"> Nursultan</li>
+    </ul>
+    <button onclick="checkAnswer()">Submit Answer</button>
+  </div>
+
+  <script>
+    function checkAnswer() {
+      const answer = document.querySelector('input[name="answer"]:checked').value;
+      if (answer === 'Nursultan') {
+        alert('Correct!');
+        // Add code to store the correct answer and move to the next question
+      } else {
+        alert('Incorrect. Try again!');
+      }
+    }
+  </script>
+</body>
+</html>
