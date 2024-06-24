@@ -1,0 +1,146 @@
+{% extends "shared/base.html" %}
+
+{% block title %}Jobster - Automation of personnel selection{% endblock %}
+
+{% block content %}
+{% block style %}
+<style>
+    /* Your existing styles */
+    .button-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 10px;
+    }
+
+    .grid-button {
+        background-color: transparent;
+        color: #333333;
+        border-radius: 30px;
+        border: 3px solid #f3f3f3;
+        font-family: "Inter", sans-serif;
+        font-weight: 400;
+        text-align: center;
+        padding: 10px;
+        cursor: pointer;
+        transition: background-color 0.3s, color 0.3s;
+    }
+
+    .grid-button:hover {
+        background-color: rgb(39, 206, 39);
+        color: white;
+    }
+
+    .grid-button.active {
+        background-color: #28a745; /* Color when pressed */
+        color: white;
+    }
+
+    .button3 {
+        background-color: rgb(39, 206, 39);
+        color: white;
+        border-radius: 15px;
+        padding: 15px 20px;
+        font-weight: 900;
+        cursor: pointer;
+        transition: background-color 0.3s;
+    }
+
+    .button3:hover {
+        background-color: #218838;
+    }
+</style>
+{% endblock %}
+
+<main>
+    <section id="double">
+        <div class="blocks" id="block4">
+            <div class="par3">
+                <center><p>Choose at least 5 Preferable Categories</p></center>
+            </div>
+
+            <div class="space">
+                <div class="container1">
+                    <div class="button-grid">
+                        {% for vacancy in vacancies %}
+                        <button type="button"
+                                class="grid-button"
+                                data-id="{{ vacancy[0] }}"
+                                data-text="{{ vacancy[1] }}"
+                                onclick="toggleActive(this)">
+                            {{ vacancy[1] }}
+                        </button>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+
+            <!-- before was Отправить -->
+            <button formaction="/quiz/redirect" onclick="send()" >Send</button>
+
+
+            <!-- before was SEND -->
+            <form class="par3" action="/quiz/redirect">
+                <button class="button3" id="save-button" onclick="send()">Send</button>
+            </form>
+
+        </div>
+    </section>
+</main>
+
+{% block scripts %}
+<script>
+    let selectedButtons = [];
+
+    function toggleActive(button) {
+        button.classList.toggle('active');
+        const buttonId = button.dataset.id;
+        const buttonText = button.dataset.text;
+
+        if (button.classList.contains('active')) {
+            selectedButtons.push({id: buttonId, text: buttonText});
+        } else {
+            selectedButtons = selectedButtons.filter(btn => btn.id !== buttonId);
+        }
+
+        // Enable/disable save button based on selection count
+
+        console.log("Selected buttons:", selectedButtons);
+    }
+
+    // Function to handle button click for submission
+    document.getElementById('save-button').addEventListener('click', async () => {
+
+        const response = await fetch("/quiz/redirect", {
+            method: 'POST',
+            headers: {"Accept": "application/json", "Content-Type": "application/json"},
+            body: JSON.stringify({"selected_buttons": selectedButtons})
+        })
+        if (response.ok) {
+            const data = await response.json();
+            document.getElementById("message").textContent = data.message;
+        } else
+            console.log(response);
+    });
+</script>
+
+<script>
+    async function send() {
+
+        const response = await fetch("/quiz/redirect", {
+            method: "POST",
+            headers: {"Accept": "application/json", "Content-Type": "application/json"},
+            body: JSON.stringify(selectedButtons)
+
+        });
+        if (!response.ok) {
+            console.log(response);
+        }
+        else {
+
+        }
+    }
+</script>
+
+{% endblock %}
+{% endblock %}
+
